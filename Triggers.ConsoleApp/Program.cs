@@ -1,6 +1,8 @@
 ﻿namespace Triggers.ConsoleApp
 {
     using Triggers;
+    using Triggers.Conditions;
+
     internal class Program
     {
         static object lockObject = new object();
@@ -12,14 +14,14 @@
 
             Timer timer = new(ShowTime, null, 0, 1000);
 
-            DateTime nowPlus10sek = DateTime.Now.AddSeconds(3);
-            DateTime nowPlus20sek = DateTime.Now.AddSeconds(5);
+            DateTime nowPlus10sek = DateTime.Now.AddSeconds(13);
+            DateTime nowPlus20sek = DateTime.Now.AddSeconds(25);
 
             //IConditionTrigger trigger = new ConditionTrigger(isStart: false)
             //    .And(() => DateTime.Now >= nowPlus10sek)
             //    .And(() => DateTime.Now <= nowPlus20sek);
 
-            IConditionTrigger trigger = new DateTimePeriodTrigger(nowPlus10sek, nowPlus20sek, period:20);
+            ITrigger trigger = new DateTimePeriodTrigger(nowPlus10sek, nowPlus20sek, period:20);
 
             //trigger.Or(() => DateTime.Now.DayOfWeek == DayOfWeek.Friday);
 

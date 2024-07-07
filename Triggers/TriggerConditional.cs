@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Triggers.Conditions;
+
 namespace Triggers
 {
-    public class ConditionTrigger : ConditionTriggerBase, IDisposable
+    public class TriggerConditional : TriggerConditionalBase, IDisposable
     {
         #region fields
         private readonly Timer _timer;
@@ -14,7 +16,7 @@ namespace Triggers
         #endregion
 
         #region .ctor
-        public ConditionTrigger(int period = 100, bool isStart = false) : base() 
+        public TriggerConditional(ICondition condition, int period = 100, bool isStart = false) : base(condition) 
         {
             _period = TimeSpan.FromMilliseconds(period);
             _timer = new Timer(OnTick, null, Timeout.Infinite, period);
@@ -26,7 +28,7 @@ namespace Triggers
         #region Trigger Tick
         private void OnTick(object? arg)
         {
-            State = IsConditions() ? TriggerState.On : TriggerState.Off;
+            State = Condition.IsSatisfied() ? TriggerState.On : TriggerState.Off;
         }
         #endregion
 
